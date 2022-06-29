@@ -1,0 +1,21 @@
+<h1>Show Repos</h1>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <th>name</th>
+        <th>html_url</th>
+    </thead>
+    <tbody>
+        <% for(repo of repos){%> 
+        <tr> 
+            <td><%= repo.name %></td>
+            <td><a href= <%= repo.html_url%>> <%= repo.full_name%> </a></td> 
+            <!-- &lt; is how you get a less than to appear as text.-->
+            <!-- Also don't put a less than percent in a comment in an ejs file because the compiler will get confused even if it's in a comment.-->
+
+        </tr>
+        <% } %>
+    </tbody>
+</table>
+
+<pre><%= JSON.stringify(repos[0],null,5) %> </pre>
