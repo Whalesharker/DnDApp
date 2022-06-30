@@ -1,4 +1,4 @@
-var createError = require('http-errors');
+/*var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -50,6 +50,7 @@ const isLoggedIn = (req,res,next) => {
 /*
   Load MongoDB models 
 */
+/*
 const ToDoItem = require('./models/ToDoItem');
 const Contact = require('./models/Contact');
 const Schedule = require('./models/Schedule');
@@ -106,6 +107,77 @@ app.use(cloudData);
 app.use(exam5);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+app.get('/simpleform',
+  isLoggedIn,
+  (req,res,next) => {
+    res.render('simpleform')
+  })
+
+app.post("/simpleform", 
+  isLoggedIn,
+ (req, res, next) => {
+  // res.json(req.body);
+  const { username, age, height } = req.body;
+  res.locals.username = username;
+  res.locals.age = age;
+  res.locals.ageInDays = age * 365;
+  res.locals.height = height;
+  res.locals.heightCm = height * 2.54;
+  res.locals.version = "1.0.0";
+  res.render("simpleformresult");
+});
+app.get('/exam3b',
+  (req, res, next) => {
+    res.render('exam3b')
+  }
+)
+app.post('/exam3b',
+  (req, res, next) => {
+    const {url} = req.body;
+    res.locals.url = url
+    res.render("exam3bShowImage")
+  }
+)
+
+app.get('/bmi',
+  (req, res, next) => {
+    res.render('bmi')
+  }
+)
+
+app.post('/bmi',
+  (req,res,next) => {
+    const {username, weight, height} = req.body;
+    res.locals.username = username;
+    res.locals.height = height;
+    res.locals.weight = weight;
+    res.locals.BMI = weight/(height*height)*703;
+    res.locals.version = '1.0.0';
+    res.render('bmiresults');
+  }
+)
+app.get('/dist',
+  (req, res, next) => {
+    res.render('dist')
+  }
+)
+app.post('/dist',
+  (req,res,next) => {
+    const {x, y, z} = req.body;
+    res.locals.x = x;
+    res.locals.y = y;
+    res.locals.z = z;
+    res.locals.distance = Math.sqrt(x*x+y*y+z*z);
+    res.render('distresults');
+  }
+)
+
+app.get('/showFamily',
+  (req,res,next) => {
+    res.locals.family = family;
+    res.render('showFamily');
+  })
 
 app.get('/apidemo/:email',
   async (req,res,next) => {
@@ -243,6 +315,19 @@ app.get('/showSpellList',
     }
   }
 )
+app.get('/bigCourses',
+  async (req,res,next) => {
+    try{
+      const bigCourses =  await Course.find({enrolled:{$gt:150}})
+                          //.select("subject coursenum name enrolled term")
+                          //.sort({term:1,enrolled:-1})
+                          //.limit(3)
+                          ;
+      res.json(bigCourses);
+    }catch(e){
+      next(e)
+    }
+  })
 
 
 
@@ -405,11 +490,64 @@ app.get('/deleteToDoItem/:itemId',
     }
 )
 
+app.get('/contacts',
+        isLoggedIn,
+  async (req,res,next) => {
+   try {
+    const contacts = await Contact.find({userId:res.locals.user._id});
+    res.locals.contacts = contacts
+    res.render('contacts')
+    //res.json(todoitems);
+   }catch(e){
+    next(e);
+   }
+  }
+)
+
+app.post('/contacts',
+  isLoggedIn,
+  async (req,res,next) => {
+    try {
+      const name = req.body.name;
+      const email = req.body.email;
+      const phone = req.body.phone;
+      const comments = req.body.comments;
+      const contactobj = {
+        userId:res.locals.user._id,
+        name:name,
+        email:email,
+        phone:phone,
+        comments:comments,
+      }
+      const contact = new Contact(contactobj); // create ORM object for item
+      await contact.save();  // stores it in the database
+      res.redirect('/contacts');
+
+
+    }catch(err){
+      next(err);
+    }
+  }
+)
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
+
+const family = [
+  {name: 'Coco', age:25,},
+  {name: 'Phoebe', age:28,},
+  {name: 'Ian', age:22,},
+  {name: 'Lars',age:"??",},
+  {name: 'Judy',age:"??",},
+  {name: 'Amah',age:"~80"},
+  {name: 'Copper',age:"Baby"},
+  {name: 'Archie',age:"Baby"},
+  {name: 'Void',age:"Baby"},
+  {name: 'Pepper',age:"Old Baby"},
+];
 
 // error handler
 app.use(function(err, req, res, next) {
@@ -423,3 +561,4 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+*/
