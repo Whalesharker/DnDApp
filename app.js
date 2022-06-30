@@ -174,14 +174,14 @@ app.get('/uploadDB',
     res.send("data uploaded: "+num)
   }
 )
-app.get("/dnd",
+app.get("/spellSearch",
   (req, res, next) => {
-    res.render('dnd')
+    res.render('spellSearch')
   }
 )
 
 
-app.post('/dnd',
+app.post('/spellSearch',
 async (req,res,next) => {
   const search = req.body.search;
   const response = await axios.get("https://www.dnd5eapi.co/api/spells/")
@@ -200,10 +200,10 @@ async (req,res,next) => {
         results.push(allSpells[i]);
     }
   }
-  //Passes results to dndresults
+  //Passes results to spellSearchResults
   res.locals.results = results
   //end of code taken from stack overflow.
-  res.render('dndresults')
+  res.render('spellSearchResults')
 })
 
 app.get('/addSpell/:spell_id',
@@ -219,7 +219,7 @@ app.get('/addSpell/:spell_id',
           }
           )
       await spellItem.save();
-      res.redirect('/dnd')
+      res.redirect('/spellSearch')
     }catch(e) {
       next(e)
     }
