@@ -27,8 +27,10 @@ const courses = require('./public/data/courses20-21.json')
 const mongoose = require( 'mongoose' );
 //const mongodb_URI = process.env.mongodb_URI;
 //const mongodb_URI = 'mongodb://localhost:27017/cs103a_todo'
-const mongodb_URI = 'mongodb+srv://cs_sj:BrandeisSpr22@cluster0.kgugl.mongodb.net/IanErickson?retryWrites=true&w=majority'
+//const mongodb_URI = 'mongodb+srv://cs_sj:BrandeisSpr22@cluster0.kgugl.mongodb.net/IanErickson?retryWrites=true&w=majority'
 //This is the URL for the mongoDB compass app.
+const mongodb_URL = 'mongodb+srv://Sheetmaker:datamcdatabaseface@dndcluster.qbo62.mongodb.net/test'
+
 mongoose.connect( mongodb_URI, { useNewUrlParser: true, useUnifiedTopology: true } );
 // fix deprecation warnings
 //mongoose.set('useFindAndModify', false); 
