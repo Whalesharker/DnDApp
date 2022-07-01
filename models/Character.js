@@ -9,8 +9,14 @@ var characterSchema = Schema( {
   class: String,
   level: Number,
   race: String,
-  //backstory: String,
+  backstory: String,
   //weapon: String,
+  str: Number,
+  dex: Number,
+  con: Number,
+  int: Number,
+  wis: Number,
+  cha: Number,
 } );
 
 module.exports = mongoose.model( 'Character', characterSchema );

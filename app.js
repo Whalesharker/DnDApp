@@ -418,7 +418,7 @@ app.get('/createCharacter',
 
 app.post('/createCharacter',
 async (req,res,next) => {
-  const {name, characterclass, level, race} = req.body;
+  const {name, characterclass, level, race, backstory,str,dex,con,int,wis,cha} = req.body;
   try {
     const character = 
        new Character(
@@ -428,6 +428,13 @@ async (req,res,next) => {
           class:characterclass,
           level:level,
           race:race,
+          backstory:backstory,
+          str:str,
+          dex:dex,
+          con:con,
+          int:int,
+          wis:wis,
+          cha:cha,
         }
         )
     await character.save();
