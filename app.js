@@ -448,11 +448,12 @@ app.get('/showCharacter',
   isLoggedIn,
   async (req,res,next) => {
     try{
-      const usercharacter = 
+      const usercharacters = 
          await Character.find({userId:res.locals.user.id})
-      res.locals.character = usercharacter;
+      res.locals.usercharacters = usercharacters;
+      //Shoot, it is saving all the characters. 
       console.log("Is there a character object here?")
-      console.log(usercharacter)
+      console.log(usercharacters)
       res.render('showCharacter')
 
     }catch(e){

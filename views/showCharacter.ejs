@@ -1,27 +1,29 @@
 <!--Currently can't actually get any information from the character object.-->
-<table class="table table-bordered table-striped">
-    <thead>
-        <th>name</th>
-        <th>race</th>
-        <th>class</th>
-    </thead>
-    <tbody>
-        <td><%= character.name %></td>
-        <td><%= character.race %></td>
-        <td><%= character.class %> <%= character.level %></td>
-    </tbody>
-</table>
-<br>
-strength: <%= character.str %>
-<br>
-dexterity: <%= character.dex %>
-<br>
-constitution: <%= character.con %>
-<br>
-intellegence: <%= character.int %>
-<br>
-wisdom: <%= character.wis %>
-<br>
-charisma: <%= character.cha %>
-<br />
+<% for(character of usercharacters){%> 
+    <table class="table table-bordered table-striped">
+        <thead>
+            <th>name</th>
+            <th>race</th>
+            <th>class</th>
+        </thead>
+        <tbody>
+            <td><%= character.name %></td>
+            <td><%= character.race %></td>
+            <td><%= character.class %> <%= character.level %></td>
+        </tbody>
+    </table>
+    <br>
+    strength: <%= character.str %>
+    <br>
+    dexterity: <%= character.dex %>
+    <br>
+    constitution: <%= character.con %>
+    <br>
+    intellegence: <%= character.int %>
+    <br>
+    wisdom: <%= character.wis %>
+    <br>
+    charisma: <%= character.cha %>
+    <br />
 
+<% } %>
