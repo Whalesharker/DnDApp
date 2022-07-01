@@ -1,0 +1,26 @@
+
+<form method="post" action="/createCharacter">
+    Name:
+    <input type="text" id ="name" name="name">
+    <br>
+    Class:
+    <select name = "characterclass">
+      <% for(c of classes){%> 
+          <option value="<%= c.name %>"><%= c.name %></option>
+      <% } %>
+    </select>
+    <br>
+    Level:
+    <input type="number" id = "level" name="level">
+    <br>
+    Race:
+    <select name = "race">
+        <% for(r of races){%> 
+            <option value="<%= r.name %>"><%= r.name %></option>
+        <% } %>
+    </select>
+    <br />
+    <input type="submit" />
+  </form>
+  
+  

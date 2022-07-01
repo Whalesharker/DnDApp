@@ -28,8 +28,8 @@ const mongoose = require( 'mongoose' );
 //const mongodb_URI = process.env.mongodb_URI;
 //const mongodb_URI = 'mongodb://localhost:27017/cs103a_todo'
 //const mongodb_URI = 'mongodb+srv://cs_sj:BrandeisSpr22@cluster0.kgugl.mongodb.net/IanErickson?retryWrites=true&w=majority'
-//This is the URL for the mongoDB compass app.
-const mongodb_URL = 'mongodb+srv://Sheetmaker:datamcdatabaseface@dndcluster.qbo62.mongodb.net/test'
+//This is the URI for the mongoDB compass app.
+const mongodb_URI = 'mongodb+srv://Sheetmaker:datamcdatabaseface@dndcluster.qbo62.mongodb.net/test'
 //TODO: Go back to the leactures and see what they did on the 6/30 lecture to hide the URL.
 mongoose.connect( mongodb_URI, { useNewUrlParser: true, useUnifiedTopology: true } );
 // fix deprecation warnings
@@ -56,6 +56,7 @@ const Schedule = require('./models/Schedule');
 const Course = require('./models/Course')
 const Spell_List = require('./models/Spell_List');
 const Spell = require('./models/Spell');
+const Character = require('./models/Character');
 
 
 var indexRouter = require('./routes/index');
@@ -136,8 +137,6 @@ app.post('/meals',
 async (req,res,next) => {
   const {ingredient} = req.body;
   const response = await axios.get('https://www.themealdb.com/api/json/v1/1/filter.php?i='+ingredient)
-  console.dir(response.data.length)
-  console.log(response)
   res.locals.meals = response.data.meals || []
   //Null is a false value, so that or statement will make recipes null if response.data.meals doesn't have anything. 
   res.locals.ingredient = ingredient
@@ -147,8 +146,6 @@ async (req,res,next) => {
 app.get('/showIngredients',
   async (req,res,next) => {
     const response = await axios.get('https://www.themealdb.com/api/json/v1/1/list.php?i=list')
-    console.dir(response.data.length)
-    console.dir(response.data.meals)
     res.locals.repos = response.data.meals
     res.render('showIngredients')
   }
@@ -157,8 +154,6 @@ app.post('/showIngredients',
 async (req,res,next) => {
   const {ingredient} = req.body;
   const response = await axios.get('https://www.themealdb.com/api/json/v1/1/filter.php?i='+ingredient)
-  console.dir(response.data.length)
-  console.log(response)
   res.locals.meals = response.data.meals || []
   //Null is a false value, so that or statement will make recipes null if response.data.meals doesn't have anything. 
   res.locals.ingredient = ingredient
@@ -185,8 +180,6 @@ app.post('/spellSearch',
 async (req,res,next) => {
   const search = req.body.search;
   const response = await axios.get("https://www.dnd5eapi.co/api/spells/")
-  console.dir(response.data.length)
-  console.log(response)
   var allSpells = response.data.results
   res.locals.search = search
   //Code below gotten and edited from https://stackoverflow.com/questions/10679580/javascript-search-inside-a-json-object
@@ -216,6 +209,8 @@ app.get('/addSpell/:spell_id',
             userid:res.locals.user._id,
             spellIndex:req.params.spell_id,
             //username:res.locals.user.username
+            spellID:req.params.spell_id,
+            
           }
           )
       await spellItem.save();
@@ -229,12 +224,12 @@ app.get('/showSpellList',
   isLoggedIn,
   async (req,res,next) => {
     try{
-      console.log('1')
+      //console.log('1')
       const spells = 
          await Spell_List.find({userId:res.locals.user.id})
-             .populate('spell_id');
-             console.log('2')
-      //res.json(courses);
+             .populate('spellID');
+             //console.log('2')
+      res.json(spells);
       res.locals.spells = spells;
       res.render('showSpellList')
 
@@ -403,6 +398,60 @@ app.get('/deleteToDoItem/:itemId',
         next(e);
       }
     }
+)
+app.get('/createCharacter',
+  isLoggedIn,
+  async (req,res,next) => {
+    const equipment = await axios.get('https://www.dnd5eapi.co/api/equipment')
+    const classes = await axios.get('https://www.dnd5eapi.co/api/classes')
+    const feats = await axios.get('https://www.dnd5eapi.co/api/feats')
+    const races = await axios.get('https://www.dnd5eapi.co/api/races')
+    //const backgrounds = await axios.get('https://www.dnd5eapi.co/api/backgrounds')
+    //The API seems to only have acolyte as an option for backgrounds, so for now I'm just not gonna include that.
+    res.locals.equipment = equipment.data.results
+    res.locals.classes = classes.data.results
+    res.locals.feats = feats.data.results
+    res.locals.races = races.data.results
+    res.render('createCharacter')
+  }
+)
+
+app.post('/createCharacter',
+async (req,res,next) => {
+  const {name, characterclass, level, race} = req.body;
+  try {
+    const character = 
+       new Character(
+        {
+          userid:res.locals.user._id,
+          name:name,
+          class:characterclass,
+          level:level,
+          race:race,
+        }
+        )
+    await character.save();
+    res.redirect('/showCharacter')
+  }catch(e) {
+    next(e)
+  }
+}
+)
+app.get('/showCharacter',
+  isLoggedIn,
+  async (req,res,next) => {
+    try{
+      const usercharacter = 
+         await Character.find({userId:res.locals.user.id})
+      res.locals.character = usercharacter;
+      console.log("Is there a character object here?")
+      console.log(usercharacter)
+      res.render('showCharacter')
+
+    }catch(e){
+      next(e);
+    }
+  }
 )
 
 
