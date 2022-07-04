@@ -57,6 +57,7 @@ const Course = require('./models/Course')
 const Spell_List = require('./models/Spell_List');
 const Spell = require('./models/Spell');
 const Character = require('./models/Character');
+const BugReport = require('./models/BugReport')
 
 
 var indexRouter = require('./routes/index');
@@ -203,16 +204,18 @@ app.get('/addSpell/:spell_id',
    isLoggedIn,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
    async (req,res,next) => {
     try {
+      const response = await axios.get("https://www.dnd5eapi.co/api/spells/"+req.params.spell_id)
       const spellItem = 
          new Spell_List(
           {
             userid:res.locals.user._id,
             spellIndex:req.params.spell_id,
             //username:res.locals.user.username
-            spellID:req.params.spell_id,
-            
+            //spellID:req.params.spell_id,
           }
           )
+          console.log("Spell ID Bellow:")
+          console.log(req.params.spell_id)
       await spellItem.save();
       res.redirect('/spellSearch')
     }catch(e) {
@@ -227,9 +230,8 @@ app.get('/showSpellList',
       //console.log('1')
       const spells = 
          await Spell_List.find({userId:res.locals.user.id})
-             .populate('spellID');
-             //console.log('2')
-      res.json(spells);
+             .populate('spellIndex');
+             console.log(spells)
       res.locals.spells = spells;
       res.render('showSpellList')
 
@@ -265,7 +267,8 @@ app.get('/showSchedule',
     try{
       const courses = 
          await Schedule.find({userId:res.locals.user.id})
-             .populate('courseId');
+             //.populate('courseId');
+             //Alright, forget the .populate. Plan B: Manually get every spell attribute from the API and manually insert them into the spell.
       //res.json(courses);
       res.locals.courses = courses;
       res.render('showmyschedule')
@@ -462,6 +465,45 @@ app.get('/showCharacter',
   }
 )
 
+
+//EXAM 6 STARTS HERE
+
+app.get('/showBugReports',
+        isLoggedIn,
+  async (req,res,next) => {
+   try {
+    const reports = await BugReport.find();
+
+    res.locals.reports = reports
+    res.render('showBugReports')
+    //res.json(todoitems);
+   }catch(e){
+    next(e);
+   }
+  }
+)
+
+app.post('/showBugReports',
+  isLoggedIn,
+  async (req,res,next) => {
+    try {
+      const {name,desc}= req.body;
+      const bug = {
+        name:name,
+        desc:desc,
+      }
+      const report = new BugReport(bug); // create ORM object for item
+      await report.save();  // stores it in the database
+      res.redirect('/showBugReports');
+
+
+    }catch(err){
+      next(err);
+    }
+  }
+)
+
+//EXAM 6 ENDS HERE.
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

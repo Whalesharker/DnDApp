@@ -1,0 +1,18 @@
+<h1>Exam 6: Bug Reports</h1>
+<% for (bug of reports){%>
+    <hr>
+    <h2>Bug Report:</h2>
+    <h5><%= bug.name %></h5>
+    <p><span class="emphasized"> <%= bug.desc %> </span>  </p>
+    <!--Italizing isn't working in either bootstraps or the above way.-->
+<% } %>
+
+<h1>Add new bug report</h1>
+<form method="post" action="showBugReports">
+    short bug description: <input type="text" name="name">
+    <br>
+    detailed description: 
+    <br>
+    <textarea id="desc" name="desc"></textarea>
+    <input type="submit">
+</form>
