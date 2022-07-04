@@ -7,18 +7,18 @@ const Mixed = Schema.Types.Mixed;
 var SpellSchema = Schema( {
     index: String,
     name: String,
-    desc: String,
-    higher_level: String,
+    desc: Array,
+    higher_level: Array,
     range: Mixed,
-    components: String,
+    components: Array,
     material: String,
     ritual: Boolean,
     duration: Mixed,
     concentration: Boolean,
     casting_time: Mixed,
     level: Mixed,
-    attack_type: String,
-    damage_type: Mixed,
+    //attack_type: String,
+    //damage_type: Mixed,
     //There are other fields but they are lists, I may have to implement them later.
     //https://www.dnd5eapi.co/api/spells/acid-arrow For reference to the fields.
 } );

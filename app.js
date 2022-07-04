@@ -200,23 +200,81 @@ async (req,res,next) => {
   res.render('spellSearchResults')
 })
 
-app.get('/addSpell/:spell_id',
+/*app.get('/addSpell/:spell_id',
    isLoggedIn,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
    async (req,res,next) => {
     try {
-      const response = await axios.get("https://www.dnd5eapi.co/api/spells/"+req.params.spell_id)
+      const spellAPI = await axios.get("https://www.dnd5eapi.co/api/spells/"+req.params.spell_id)
+      console.log(spellAPI)
+      const createdSpell = 
+        new Spell(
+          {
+
+            index: spellAPI.data.index,
+            name: spellAPI.data.name,
+            desc:spellAPI.data.desc,
+            higher_level: spellAPI.data.higher_level,
+            range: spellAPI.data.range,
+            components: spellAPI.data.components,
+            material: spellAPI.data.material,
+            ritual: spellAPI.data.ritual,
+            duration: spellAPI.data.duration,
+            concentration: spellAPI.data.concentration,
+            casting_time: spellAPI.data.casting_time,
+            level: spellAPI.data.level,
+            
+            //attack_type: String,
+            //damage_type: Mixed,
+          }
+        )
+      console.log(createdSpell)
+      
       const spellItem = 
          new Spell_List(
           {
             userid:res.locals.user._id,
             spellIndex:req.params.spell_id,
-            //username:res.locals.user.username
             //spellID:req.params.spell_id,
           }
           )
-          console.log("Spell ID Bellow:")
-          console.log(req.params.spell_id)
       await spellItem.save();
+      res.redirect('/spellSearch')
+    }catch(e) {
+      next(e)
+    }
+   }
+)
+*/
+//The spell_list object just wasn't working. But the spell object might actually be a list of spells anyway.
+app.get('/addSpell/:spell_id',
+   isLoggedIn,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+   async (req,res,next) => {
+    try {
+      const spellAPI = await axios.get("https://www.dnd5eapi.co/api/spells/"+req.params.spell_id)
+      console.log(spellAPI)
+      const createdSpell = 
+        new Spell(
+          {
+
+            index: spellAPI.data.index,
+            name: spellAPI.data.name,
+            desc:spellAPI.data.desc,
+            higher_level: spellAPI.data.higher_level,
+            range: spellAPI.data.range,
+            components: spellAPI.data.components,
+            material: spellAPI.data.material,
+            ritual: spellAPI.data.ritual,
+            duration: spellAPI.data.duration,
+            concentration: spellAPI.data.concentration,
+            casting_time: spellAPI.data.casting_time,
+            level: spellAPI.data.level,
+            
+            //attack_type: String,
+            //damage_type: Mixed,
+          }
+        )
+      console.log(createdSpell)
+      await createdSpell.save();
       res.redirect('/spellSearch')
     }catch(e) {
       next(e)
@@ -229,8 +287,9 @@ app.get('/showSpellList',
     try{
       //console.log('1')
       const spells = 
-         await Spell_List.find({userId:res.locals.user.id})
-             .populate('spellIndex');
+         await Spell.find({userId:res.locals.user.id})
+            
+             //Alright, forget the .populate. Plan B: Manually get every spell attribute from the API and manually insert them into the spell.
              console.log(spells)
       res.locals.spells = spells;
       res.render('showSpellList')
@@ -267,9 +326,8 @@ app.get('/showSchedule',
     try{
       const courses = 
          await Schedule.find({userId:res.locals.user.id})
-             //.populate('courseId');
-             //Alright, forget the .populate. Plan B: Manually get every spell attribute from the API and manually insert them into the spell.
-      //res.json(courses);
+             .populate('courseId');
+              //res.json(courses);
       res.locals.courses = courses;
       res.render('showmyschedule')
 

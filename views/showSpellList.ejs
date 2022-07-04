@@ -3,17 +3,23 @@
     <thead>
         <th>name</th>
         <th>desc</th>
-        <th>damage type </th>
+        <th>level</th>
+        <th>ritual? </th>
+        <th>casting time</th>
+        <th>range</th>
     </thead>
     <tbody>
         <% for(s of spells){%> 
             <tr> 
                 <td> <%= s.name %> </td> 
                 <td> <%= s.desc %> </td> 
-                <td> <%= s.damage_type %> </td>
+                <td> <%= s.level %> </td>
+                <td> <%= s.ritual %> </td>
+                <td> <%= s.casting_time %> </td>
+                <td> <%= s.range %> </td>
+
 
             </tr>
         <% } %>
     </tbody>
 </table>
-<%= JSON.stringify(spells) %>
