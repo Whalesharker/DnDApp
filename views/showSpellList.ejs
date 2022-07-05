@@ -7,6 +7,8 @@
         <th>ritual? </th>
         <th>casting time</th>
         <th>range</th>
+        <th>remove from list</th>
+        
     </thead>
     <tbody>
         <% for(s of spells){%> 
@@ -17,6 +19,7 @@
                 <td> <%= s.ritual %> </td>
                 <td> <%= s.casting_time %> </td>
                 <td> <%= s.range %> </td>
+                <td> <a href="/deleteSpell/<%= s.id%>">Remove</a></td>
 
 
             </tr>

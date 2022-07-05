@@ -298,6 +298,20 @@ app.get('/showSpellList',
   }
 )
 
+app.get('/deleteSpell/:itemId',
+    isLoggedIn,
+    async (req,res,next) => {
+      try {
+        const itemId = req.params.itemId;
+        await Spell.deleteOne({_id:itemId});
+        res.redirect('/showSpellList');
+      } catch(e){
+        next(e);
+      }
+    }
+)
+
+
 
 
 app.get('/addCourse/:courseId',
@@ -494,6 +508,8 @@ async (req,res,next) => {
           int:int,
           wis:wis,
           cha:cha,
+          //I might want to have it automatically calculate hp based on the class and con.
+          //But I think I have class stored as a string, so that might be hard.
         }
         )
     await character.save();
@@ -518,6 +534,19 @@ app.get('/showCharacter',
       next(e);
     }
   }
+)
+
+app.get('/deleteCharacter/:itemId',
+    isLoggedIn,
+    async (req,res,next) => {
+      try {
+        const itemId = req.params.itemId;
+        await Character.deleteOne({_id:itemId});
+        res.redirect('/showCharacter');
+      } catch(e){
+        next(e);
+      }
+    }
 )
 
 
