@@ -5,6 +5,7 @@ const ObjectId = Schema.Types.ObjectId;
 const Mixed = Schema.Types.Mixed;
 
 var SpellSchema = Schema( {
+    userId: {type:Schema.Types.ObjectId, ref:'User'},
     index: String,
     name: String,
     desc: Array,

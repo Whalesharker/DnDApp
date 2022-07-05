@@ -255,7 +255,7 @@ app.get('/addSpell/:spell_id',
       const createdSpell = 
         new Spell(
           {
-
+            userId: res.locals.user._id,
             index: spellAPI.data.index,
             name: spellAPI.data.name,
             desc:spellAPI.data.desc,
@@ -287,10 +287,8 @@ app.get('/showSpellList',
     try{
       //console.log('1')
       const spells = 
-         await Spell.find({userId:res.locals.user.id})
-            
-             //Alright, forget the .populate. Plan B: Manually get every spell attribute from the API and manually insert them into the spell.
-             console.log(spells)
+         await Spell.find({userId:res.locals.user._id})
+         console.log(spells)
       res.locals.spells = spells;
       res.render('showSpellList')
 
