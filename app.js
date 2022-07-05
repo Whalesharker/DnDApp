@@ -482,7 +482,7 @@ async (req,res,next) => {
     const character = 
        new Character(
         {
-          userid:res.locals.user._id,
+          userId: res.locals.user._id,
           name:name,
           class:characterclass,
           level:level,
@@ -508,7 +508,7 @@ app.get('/showCharacter',
   async (req,res,next) => {
     try{
       const usercharacters = 
-         await Character.find({userId:res.locals.user.id})
+         await Character.find({userId:res.locals.user._id})
       res.locals.usercharacters = usercharacters;
       //Shoot, it is saving all the characters. 
       console.log("Is there a character object here?")
