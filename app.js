@@ -510,7 +510,6 @@ app.get('/showCharacter',
       const usercharacters = 
          await Character.find({userId:res.locals.user._id})
       res.locals.usercharacters = usercharacters;
-      //Shoot, it is saving all the characters. 
       console.log("Is there a character object here?")
       console.log(usercharacters)
       res.render('showCharacter')
