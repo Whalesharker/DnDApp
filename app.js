@@ -491,7 +491,7 @@ app.get('/createCharacter',
 
 app.post('/createCharacter',
 async (req,res,next) => {
-  const {name, characterclass, level, race, backstory,str,dex,con,int,wis,cha} = req.body;
+  const {name, characterclass, level, race, backstory,str,dex,con,int,wis,cha,pic} = req.body;
   try {
     const character = 
        new Character(
@@ -508,6 +508,7 @@ async (req,res,next) => {
           int:int,
           wis:wis,
           cha:cha,
+          picture:pic,
           //I might want to have it automatically calculate hp based on the class and con.
           //But I think I have class stored as a string, so that might be hard.
         }

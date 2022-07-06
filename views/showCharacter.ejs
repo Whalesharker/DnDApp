@@ -27,6 +27,8 @@
     <br />
     backstory: <%= character.backstory %>
     <br>
-    <a href="/deleteCharacter/<%= character.id%>">delete</a>
+    <img src = "<%= character.picture%>" alt="an image representing your character." height = 200 width = 200>
+    <br> 
+    <a href="/deleteCharacter/<%= character.id%>">delete character</a>
     <hr>
 <% } %>
