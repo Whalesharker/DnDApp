@@ -109,57 +109,6 @@ app.use(exam5);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-app.get('/apidemo/:email',
-  async (req,res,next) => {
-    const email = req.params.email;
-    const response = await axios.get('https://www.cs.brandeis.edu/~tim/cs103aSpr22/courses20-21.json')
-    console.dir(response.data.length)
-    res.locals.courses = response.data.filter((c) => c.instructor[2]==email+"@brandeis.edu")
-    res.render('showCourses')
-    //res.json(response.data.slice(100,105));
-  })
-
-app.get('/githubInfo/:githubID',
-  async (req,res,next) => {
-    const id = req.params.githubId;
-    const response = await axios.get('https://api.github.com/users/'+id+'/repos')
-    console.dir(response.data.length)
-    res.locals.repos = response.data
-    res.render('showRepos')
-    //res.json(response.data.slice(100,105));
-  })
-
-app.get('/meals',
-async (req,res,next) => {
-  res.render('meals')
-})
-
-app.post('/meals',
-async (req,res,next) => {
-  const {ingredient} = req.body;
-  const response = await axios.get('https://www.themealdb.com/api/json/v1/1/filter.php?i='+ingredient)
-  res.locals.meals = response.data.meals || []
-  //Null is a false value, so that or statement will make recipes null if response.data.meals doesn't have anything. 
-  res.locals.ingredient = ingredient
-  res.render('showMeals')
-})
-
-app.get('/showIngredients',
-  async (req,res,next) => {
-    const response = await axios.get('https://www.themealdb.com/api/json/v1/1/list.php?i=list')
-    res.locals.repos = response.data.meals
-    res.render('showIngredients')
-  }
-)
-app.post('/showIngredients',
-async (req,res,next) => {
-  const {ingredient} = req.body;
-  const response = await axios.get('https://www.themealdb.com/api/json/v1/1/filter.php?i='+ingredient)
-  res.locals.meals = response.data.meals || []
-  //Null is a false value, so that or statement will make recipes null if response.data.meals doesn't have anything. 
-  res.locals.ingredient = ingredient
-  res.render('showMeals')
-})
 
 app.get('/uploadDB',
   async (req,res,next) => {
