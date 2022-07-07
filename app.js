@@ -179,6 +179,8 @@ app.get('/addSpell/:spell_id',
         )
       console.log(createdSpell)
       await createdSpell.save();
+      res.redirect('/showSpellList');
+
     }catch(e) {
       next(e)
     }
