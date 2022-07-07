@@ -1,0 +1,34 @@
+<form method="post" action="/editCharacter">
+    <input type= "text" id= "oldId" name = "oldId" value = "<%= id %>">
+    <br>
+    Name:
+    <input type= "text" id ="name" name="name" value="<%= char.name %>">
+    <br>
+    Race:
+    <input type="text" id = "race" name="race" value= "<%= char.race %>">
+    <br>
+    Class:
+    <input type="text" id = "characterclass" name="characterclass" value= "<%= char.class %>">
+    <!--Race and class are normal text boxes due to me not knowing how to set a default value for selection.-->
+    Level:
+    <input type="number" id = "level" name="level" value= "<%= char.level %>" max = 20 min = 1 > 
+    <br>
+    str: <input type="number" id = "str" name="str" max = 20 min = 3 value= "<%= char.str %>">
+    <br>
+    dex: <input type="number" id = "dex" name="dex" max = 20 min = 3 value= "<%= char.dex %>">
+    <br>
+    con: <input type="number" id = "con" name="con" max = 20 min = 3 value= "<%= char.con %>">
+    <br>
+    int: <input type="number" id = "int" name="int" max = 20 min = 3 value= "<%= char.int %>">
+    <br>
+    wis: <input type="number" id = "wis" name="wis" max = 20 min = 3 value= "<%= char.wis %>">
+    <br>
+    cha: <input type="number" id = "cha" name="cha" max = 20 min = 3 value= "<%= char.cha %>">
+    <br />
+    Backstory:
+    <textarea id="backstory" name="backstory"><%= char.backstory%></textarea>
+    Picture: <input type = "text" id = "pic" name = "pic" value= "<%= char.picture %>">
+    <input type="submit" />
+  </form>
+  
+  

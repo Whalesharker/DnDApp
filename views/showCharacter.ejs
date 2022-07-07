@@ -15,7 +15,7 @@
     <br>
     <img src = "<%= character.picture%>" alt="an image representing your character." height = 200 width = 200>
     <br>
-    strength: <%= character.str %>
+    strength: <%= character.str %> 
     <br>
     dexterity: <%= character.dex %>
     <br>
@@ -28,6 +28,8 @@
     charisma: <%= character.cha %>
     <br />
     backstory: <%= character.backstory %>
+    <br>
+    <a href="/editCharacter/<%= character.id%>">edit character</a>
     <br> 
     <a href="/deleteCharacter/<%= character.id%>">delete character</a>
     <hr>

@@ -414,7 +414,7 @@ async (req,res,next) => {
           cha:cha,
           picture:pic,
           //I might want to have it automatically calculate hp based on the class and con.
-          //But I think I have class stored as a string, so that might be hard.
+          //But I think I have class stored as a string instead of an object, so that might be hard.
         }
         )
     await character.save();
@@ -453,8 +453,74 @@ app.get('/deleteCharacter/:itemId',
       }
     }
 )
+app.get('/editCharacter/:itemId',
+async (req,res,next) => {
+  try {
+    const itemId = req.params.itemId;
+    //Unsure if this needs to be in a try/catch statement by itself. 
+    console.log("here's the ID")
+    console.log(itemId)
+    //I need to still pass itemId along to post.
+    const char = await Character.findById({_id:itemId});
+    res.locals.char = char
+    res.locals.id =  itemId
+    res.render('editCharacter')
+  } catch(e){
+    next(e);
+  }
 
+}
 
+)
+/*app.post('/editCharacter',
+async (req,res,next) => {
+  const {itemId,name2, characterclass2, level2, race2, backstory2,str2,dex2,con2,int2,wis2,cha2,pic2} = req.body;
+  try {
+    const char = await Character.findById({_id:itemId});
+    char.setAttribute("name", name2); 
+    //char.setAttribute("characterclass", characterclass2); 
+    char.setAttribute("level", level2); 
+    await char.save();
+    res.redirect('/showCharacter')
+  }catch(e) {
+    next(e)
+  }
+}
+//Actually editing the object unfortunently doesn't work. So I am going with the easier method of just deleting the original character and remaking them.
+)*/
+app.post('/editCharacter',
+async (req,res,next) => {
+  const {oldId,name, characterclass, level, race, backstory,str,dex,con,int,wis,cha,pic} = req.body;
+  console.log(name)
+  console.log(oldId)
+  try {
+    const character = 
+       new Character(
+        {
+          userId: res.locals.user._id,
+          name:name,
+          class:characterclass,
+          level:level,
+          race:race,
+          backstory:backstory,
+          str:str,
+          dex:dex,
+          con:con,
+          int:int,
+          wis:wis,
+          cha:cha,
+          picture:pic,
+        }
+        )
+        console.log(2)
+    await character.save();
+    res.redirect('/deleteCharacter/'+oldId)
+    console.log(3)
+  }catch(e) {
+    next(e)
+  }
+}
+)
 //EXAM 6 STARTS HERE
 
 app.get('/showBugReports',
