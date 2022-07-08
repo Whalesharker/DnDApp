@@ -4,7 +4,7 @@ This is a spell lookup and character creator for Dungeons and Dragons 5th editio
 In order to use this app, you must first sign up with a username, email, password and age (the password will be encrypted and none of this information will be given to other users.)
 <img src="public/Login.png" alt="A picture of the login screen." />
 
-<h3>Spell searching and list creation:</h3>
+<h3>Spell searching and spell list creation:</h3>
 Once the user is signed up, they can click the "search for spells" option on the home page or from the dropdown menu to enter in any text and get a list of spells with descriptions that contain that text.
 <img src="public/Search.png" alt="A picture of the screen where the user can enter a word to search." />
 
