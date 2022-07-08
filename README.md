@@ -1,8 +1,10 @@
 This is a spell lookup and character creator for Dungeons and Dragons 5th edition. 
+
 In order to use this app, you must first sign up with a username, email, password and age (the password will be encrypted and none of this information will be given to other users.)
 <img src="public/Login.png"
      alt="A picture of the login screen." />
 Once the user is signed up, they can click the "search for spells" option on the home page or from the dropdown menu to enter in any text and get a list of spells with descriptions that contain that text.
+
 The user can then either click the provided URL to go the API's entry on that spell, which contains more information, or add it to a saved list of spells on the application itself for easy viewing later. (Currently, the spells description and other statistics are unavaliable unless the spell's URL is viewed or it is added to the user's list of spells.)
 Adding a spell or clicking the "Show spell list" button on the main menu will bring the user to a menu showing all of the spells they have saved with important information like the spell's description, it's level, if it's a ritual, it's casting time, and it's range. From their they can also remove any spell from their saved list by pressing the "Remove" button.
 The user can create a new character by clicking "Create a new character" on the home page or from the dropdown menu. They will be asked to fill in basic facts about the character, such as their race, class, level, stats, backstory and a link a picture that represents them.
