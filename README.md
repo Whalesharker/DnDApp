@@ -12,6 +12,7 @@ The user can then either click the provided URL to go the API's entry on that sp
 Adding a spell or clicking the "Show spell list" button on the main menu will bring the user to a menu showing all of the spells they have saved with important information like the spell's description, it's level, if it's a ritual, it's casting time, and it's range. From their they can also remove any spell from their saved list by pressing the "Remove" button.
 <img src="public/Spell List.png" alt="A picture of a created spell list." />
 
+<h3>Character Creation:</h3>
 The user can create a new character by clicking "Create a new character" on the home page or from the dropdown menu. They will be asked to fill in basic facts about the character, such as their race, class, level, stats, backstory and a link a picture that represents them.
 <img src="public/Character creation.png" alt="A picture of the character creation screen." />
 
