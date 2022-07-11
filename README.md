@@ -5,16 +5,15 @@ Install node.js onto your computer if you don't already have it.
 Navigate to the DnDapp folder using your computer's terminal, and then run npm install. From there the app can be run using npm start. Alternatively you can install nodemon and use the command nodemon to run it. 
 
 Dependences which can be installed using "npm install (name of package)": 
-http-errors
-express
-path
-cookie-Parser
-morgan
-express-ejs-layouts
-axios
-./routes/auth
-express-session
-connect-mongodb-session
+http-errors,
+express,
+path,
+cookie-Parser,
+morgan,
+express-ejs-layouts,
+axios,
+express-session,
+connect-mongodb-session,
 mongoose
 
 <h3>Account creation and login:</h3>
