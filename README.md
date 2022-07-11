@@ -1,5 +1,22 @@
 This is a spell lookup and character creator for Dungeons and Dragons 5th edition. 
 
+Installation: 
+Install node.js onto your computer if you don't already have it.
+Navigate to the DnDapp folder using your computer's terminal, and then run npm install. From there the app can be run using npm start. Alternatively you can install nodemon and use the command nodemon to run it. 
+
+Dependences which can be installed using "npm install (name of package)": 
+http-errors
+express
+path
+cookie-Parser
+morgan
+express-ejs-layouts
+axios
+./routes/auth
+express-session
+connect-mongodb-session
+mongoose
+
 <h3>Account creation and login:</h3>
 In order to use this app, you must first sign up with a username, email, password and age (the password will be encrypted and none of this information will be given to other users.)
 <img src="public/Login.png" alt="A picture of the login screen." />
